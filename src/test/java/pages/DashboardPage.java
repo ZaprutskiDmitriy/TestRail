@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class DashboardPage extends BasePage{
+public class DashboardPage extends BasePage {
 
     private static final By TITLE = By.id("navigation-dashboard");
     private static final By USER_MENU = By.xpath("//*[@id='navigation-user']/descendant::span[@class='caret']");
@@ -35,11 +35,11 @@ public class DashboardPage extends BasePage{
         driver.findElement(ADD_PROJECT_BUTTON).click();
     }
 
-    public boolean validateProject(String projectName) {
-        List<WebElement> projectsList= driver.findElements(ALL_PROJECTS);
+    public boolean isProjectExist(String projectName) {
+        List<WebElement> projectsList = driver.findElements(ALL_PROJECTS);
         boolean isProjectCreated = false;
-        for (WebElement project: projectsList) {
-            if(project.getText().equals(projectName)){
+        for (WebElement project : projectsList) {
+            if (project.getText().equals(projectName)) {
                 isProjectCreated = true;
             }
         }

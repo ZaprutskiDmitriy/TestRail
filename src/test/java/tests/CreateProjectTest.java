@@ -21,6 +21,6 @@ public class CreateProjectTest extends BaseTest {
         dashboardPage.createProject();
         projectCreationPage.insertProjectInfo(projectName, projectAnnouncement, ProjectCreationPage.Type.MULTIPLY);
         dashboardPage.open();
-        assertTrue(dashboardPage.validateProject(projectName), "Project was not created");
+        assertTrue(dashboardPage.isProjectExist(projectName), "Project was not created");
     }
 }
