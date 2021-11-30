@@ -6,9 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import pages.DashboardPage;
-import pages.LoginPage;
-import pages.ProjectCreationPage;
+import pages.*;
 import utils.PropertyReader;
 
 import java.util.concurrent.TimeUnit;
@@ -19,10 +17,14 @@ public class BaseTest {
             PropertyReader.getProperty("testrail.user"));
     public static final String PASSWORD = System.getenv().getOrDefault("TESTRAIL_PASS",
             PropertyReader.getProperty("testrail.pass"));
+    public static final String TEST_PROJECT_NAME = "TestProject";
     WebDriver driver;
     LoginPage loginPage;
     DashboardPage dashboardPage;
     ProjectCreationPage projectCreationPage;
+    ProjectPage projectPage;
+    CasesPage casesPage;
+    CaseCreationPage caseCreationPage;
 
     @BeforeMethod
     public void setUp() {
@@ -35,6 +37,9 @@ public class BaseTest {
         loginPage = new LoginPage(driver);
         dashboardPage = new DashboardPage(driver);
         projectCreationPage = new ProjectCreationPage(driver);
+        projectPage = new ProjectPage(driver);
+        casesPage = new CasesPage(driver);
+        caseCreationPage = new CaseCreationPage(driver);
     }
 
     @AfterMethod(alwaysRun = true)

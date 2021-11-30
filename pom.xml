@@ -111,13 +111,6 @@
                         -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspect.version}/aspectjweaver-${aspect.version}.jar -Xmx256m
                     </argLine>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.aspectj</groupId>
-                        <artifactId>aspectjweaver</artifactId>
-                        <version>${aspect.version}</version>
-                    </dependency>
-                </dependencies>
             </plugin>
             <plugin>
                 <groupId>io.qameta.allure</groupId>

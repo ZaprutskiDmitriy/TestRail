@@ -13,6 +13,7 @@ public class DashboardPage extends BasePage {
     private static final By LOGOUT_BUTTON = By.id("navigation-user-logout");
     private static final By ADD_PROJECT_BUTTON = By.id("sidebar-projects-add");
     private static final By ALL_PROJECTS = By.cssSelector(".summary-title");
+    private String projectLocator = "//*[contains(text(),'%s')]";
 
     public DashboardPage(WebDriver driver) {
         super(driver);
@@ -44,5 +45,9 @@ public class DashboardPage extends BasePage {
             }
         }
         return isProjectCreated;
+    }
+
+    public void openProject(String projectName) {
+        driver.findElement(By.xpath(String.format(projectLocator, projectName))).click();
     }
 }
