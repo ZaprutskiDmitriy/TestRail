@@ -6,7 +6,7 @@ import pages.ProjectCreationPage;
 
 import static org.testng.Assert.assertTrue;
 
-public class CreateProjectTest extends BaseTest {
+public class ProjectTest extends BaseTest {
 
     static Faker faker;
 
