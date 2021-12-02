@@ -98,6 +98,7 @@ public class SuitesAndCasesPage extends BasePage {
     }
 
     public void openCaseTab() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(CASE_TAB));
         driver.findElement(CASE_TAB).click();
     }
 
