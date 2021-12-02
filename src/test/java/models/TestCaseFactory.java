@@ -4,10 +4,9 @@ import com.github.javafaker.Faker;
 
 public class TestCaseFactory {
 
-    static Faker faker;
+    static Faker faker = new Faker();
 
-    public static TestCase get() {
-        faker = new Faker();
+    public static TestCase getCase() {
         return new TestCase(faker.company().industry(),
                 "",
                 "Test Case (Text)",
@@ -19,5 +18,19 @@ public class TestCaseFactory {
                 faker.howIMetYourMother().catchPhrase(),
                 faker.howIMetYourMother().quote(),
                 faker.howIMetYourMother().highFive());
+    }
+
+    public static TestCase getSecondCase() {
+        return new TestCase(faker.company().name(),
+                "",
+                "Test Case (Text)",
+                "Regression",
+                "Medium",
+                faker.number().digit(),
+                faker.internet().url(),
+                "Ranorex",
+                faker.lordOfTheRings().character(),
+                faker.yoda().quote(),
+                faker.lordOfTheRings().location());
     }
 }

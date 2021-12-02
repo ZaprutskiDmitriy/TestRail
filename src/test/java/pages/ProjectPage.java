@@ -14,6 +14,4 @@ public class ProjectPage extends BasePage {
     public void openCaseTab() {
         driver.findElement(CASE_TAB).click();
     }
-
-
 }
