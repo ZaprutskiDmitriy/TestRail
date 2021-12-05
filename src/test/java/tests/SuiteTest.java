@@ -12,8 +12,8 @@ public class SuiteTest extends BaseTest {
 
     @Test
     public void suiteShouldBeCreated() {
-        String suiteName = faker.country().name();
-        String suiteDescription = faker.country().capital();
+        String suiteName = faker.country().name() + faker.number().randomDigit();
+        String suiteDescription = faker.country().capital() + faker.number().randomDigit();
 
         loginPage.open();
         loginPage.login(USERNAME, PASSWORD);
@@ -23,13 +23,13 @@ public class SuiteTest extends BaseTest {
         suitesAndCasesPage.clickCreateSuiteButton();
         suitesAndCasesPage.createSuite(suiteName, suiteDescription);
         suitesAndCasesPage.openCaseTab();
-        assertTrue(suitesAndCasesPage.isSuiteExist(suiteName), "Suite was not created");
+        assertTrue(suitesAndCasesPage.isCaseOrSuiteExist(suiteName, "suite"), "Suite was not created");
     }
 
     @Test
     public void suiteShouldBeUpdated() {
-        String suiteName = faker.country().name();
-        String newSuiteName = faker.currency().name();
+        String suiteName = faker.country().name() + faker.number().randomDigit();
+        String newSuiteName = faker.currency().name() + faker.number().randomDigit();
         String suiteDescription = faker.country().capital();
         String newSuiteDescription = faker.currency().code();
 
@@ -41,15 +41,15 @@ public class SuiteTest extends BaseTest {
         suitesAndCasesPage.clickCreateSuiteButton();
         suitesAndCasesPage.createSuite(suiteName, suiteDescription);
         suitesAndCasesPage.openCaseTab();
-        suitesAndCasesPage.editSuite(suiteName);
+        suitesAndCasesPage.clickDeleteOrEditIcon(suiteName, "edit", "suite");
         suitesAndCasesPage.updateSuite(newSuiteName, newSuiteDescription);
         suitesAndCasesPage.openCaseTab();
-        assertTrue(suitesAndCasesPage.isSuiteExist(newSuiteName), "Suite was not updated");
+        assertTrue(suitesAndCasesPage.isCaseOrSuiteExist(newSuiteName, "suite"), "Suite was not updated");
     }
 
     @Test
     public void suiteShouldBeDeleted() {
-        String suiteName = faker.country().name();
+        String suiteName = faker.country().name() + faker.number().randomDigit();
         String suiteDescription = faker.country().capital();
 
         loginPage.open();
@@ -60,9 +60,9 @@ public class SuiteTest extends BaseTest {
         suitesAndCasesPage.clickCreateSuiteButton();
         suitesAndCasesPage.createSuite(suiteName, suiteDescription);
         suitesAndCasesPage.openCaseTab();
-        suitesAndCasesPage.deleteSuite(suiteName);
+        suitesAndCasesPage.clickDeleteOrEditIcon(suiteName, "delete", "suite");
         suitesAndCasesPage.confirmDeleteSuite();
         suitesAndCasesPage.openCaseTab();
-        assertFalse(suitesAndCasesPage.isSuiteExist(suiteName), "Suite has not been deleted");
+        assertFalse(suitesAndCasesPage.isCaseOrSuiteExist(suiteName,"suite"), "Suite has not been deleted");
     }
 }

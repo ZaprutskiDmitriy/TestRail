@@ -3,8 +3,12 @@ package tests;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.opera.OperaDriver;
+import org.testng.ITestContext;
+import org.testng.annotations.*;
 import pages.*;
 import utils.PropertyReader;
 
@@ -26,13 +30,28 @@ public class BaseTest {
     AdministrationPage administrationPage;
     CaseDetailsPage caseDetailsPage;
 
+    @Parameters({"browser", "headless"})
     @BeforeMethod
-    public void setUp() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-//        TODO PARALLELING TESTS FOR MULTIPLE BROWSERS
-//        WebDriverManager.firefoxdriver().setup();
-//        driver = new FirefoxDriver();
+    public void setUp(@Optional("chrome") String browser, @Optional("headless") String headless, ITestContext context) {
+        if (browser.equalsIgnoreCase("chrome")) {
+            WebDriverManager.chromedriver().setup();
+            ChromeOptions chromeOptions = new ChromeOptions();
+            if (headless.equalsIgnoreCase("headless")) {
+                chromeOptions.addArguments("--headless");
+            }
+            driver = new ChromeDriver(chromeOptions);
+        } else if (browser.equalsIgnoreCase("opera")) {
+            WebDriverManager.operadriver().setup();
+            driver = new OperaDriver();
+        } else if (browser.equalsIgnoreCase("firefox")) {
+            WebDriverManager.firefoxdriver().setup();
+            FirefoxOptions firefoxOptions = new FirefoxOptions();
+            if (headless.equalsIgnoreCase("headless")) {
+                firefoxOptions.addArguments("--headless");
+            }
+            driver = new FirefoxDriver(firefoxOptions);
+        }
+        context.setAttribute("driver", driver);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         loginPage = new LoginPage(driver);
@@ -47,6 +66,8 @@ public class BaseTest {
 
     @AfterMethod(alwaysRun = true)
     public void close() {
-        driver.quit();
+        if (driver != null) {
+            driver.quit();
+        }
     }
 }

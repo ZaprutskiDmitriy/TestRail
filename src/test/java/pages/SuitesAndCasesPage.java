@@ -25,40 +25,70 @@ public class SuitesAndCasesPage extends BasePage {
 
     String deleteCaseIconLocator = "//div[contains(@class,'grid-container')]/descendant::span[text()=\"%s\"]/ancestor::tr/descendant::div[contains(@class,'icon-small-delete')]/ancestor::a";
     String editCaseIconLocator = "//div[contains(@class,'grid-container')]/descendant::span[text()=\"%s\"]/ancestor::tr/descendant::a[@class='editLink']";
-    String deleteSuiteIconLocator = "//span[contains(@id,'sectionName') and contains(text(),\"%s\")]/parent::div/descendant::div[contains(@class,'icon-small-delete')]";
-    String editSuiteIconLocator = "//span[contains(@id,'sectionName') and contains(text(),\"%s\")]/parent::div/descendant::div[contains(@class,'icon-small-edit')]";
+    String deleteSuiteIconLocator = "//span[contains(@id,'sectionName') and text()=\"%s\"]/parent::div/descendant::div[contains(@class,'icon-small-delete')]";
+    String editSuiteIconLocator = "//span[contains(@id,'sectionName') and text()=\"%s\"]/parent::div/descendant::div[contains(@class,'icon-small-edit')]";
     String caseLocator = "//div[contains(@class,'grid-container')]/descendant::span[text()=\"%s\"]";
-    String suiteLocator = "//div[contains(@class,'grid-container')]/descendant::span[contains(@id,'sectionName') and contains(text(),\"%s\")]";
+    String suiteLocator = "//div[contains(@class,'grid-container')]/descendant::span[contains(@id,'sectionName') and text()=\"%s\"]";
 
     public SuitesAndCasesPage(WebDriver driver) {
         super(driver);
     }
 
     public void clickCreateCaseButton() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(ADD_CASE_BUTTON));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("blockUI blockOverlay")));
         driver.findElement(ADD_CASE_BUTTON).click();
     }
 
-    public boolean isCaseExist(String caseName) {
-        List<WebElement> testCasesList = driver.findElements(ALL_CASES);
-        boolean isCaseExist = false;
-        for (WebElement testCase : testCasesList) {
-            if (testCase.getText().equals(caseName)) {
-                isCaseExist = true;
+    public boolean isCaseOrSuiteExist(String caseOrSuiteName, String typeOfTestSubject) {
+        By locator = null;
+        if (typeOfTestSubject.equalsIgnoreCase("case")) {
+            locator = ALL_CASES;
+        } else if (typeOfTestSubject.equalsIgnoreCase("suite")) {
+            locator = ALL_SUITES;
+        }
+        List<WebElement> testCasesOrSuitesList = driver.findElements(locator);
+        boolean isCaseOrSuiteExist = false;
+        for (WebElement testCaseOrSuite : testCasesOrSuitesList) {
+            if (testCaseOrSuite.getText().equals(caseOrSuiteName)) {
+                isCaseOrSuiteExist = true;
             }
         }
-        return isCaseExist;
+        return isCaseOrSuiteExist;
     }
 
-    public void deleteCase(String caseName) {
+    public void scroll(String targetLocator, String targetName) {
+        WebElement targetTitle = driver.findElement(By.xpath(String.format(targetLocator, targetName)));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", targetTitle);
+        ((JavascriptExecutor) driver).executeScript("scrollBy(0, -150)");
+    }
+
+    public void hover(String targetLocator, String targetName) {
         Actions actions = new Actions(driver);
-        WebElement scrolling = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.format(caseLocator, caseName))));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(0, arguments[0].scrollHeight)", scrolling);
-        WebElement caseTitle = driver.findElement(By.xpath(String.format(caseLocator, caseName)));
-        actions.moveToElement(caseTitle).build().perform();
-        driver.findElement(By.xpath(String.format(deleteCaseIconLocator, caseName))).click();
+        WebElement targetTitle = driver.findElement(By.xpath(String.format(targetLocator, targetName)));
+        actions.moveToElement(targetTitle).build().perform();
+    }
+
+    public void clickDeleteOrEditIcon(String caseOrSuiteName, String action, String typeOfTestSubject) {
+        String iconLocator = null;
+        scroll(caseLocator, caseOrSuiteName);
+        hover(caseLocator, caseOrSuiteName);
+        if (action.equalsIgnoreCase("edit") && typeOfTestSubject.equalsIgnoreCase("case")) {
+            iconLocator = editCaseIconLocator;
+        } else if (action.equalsIgnoreCase("edit") && typeOfTestSubject.equalsIgnoreCase("suite")) {
+            iconLocator = editSuiteIconLocator;
+        } else if (action.equalsIgnoreCase("delete") && typeOfTestSubject.equalsIgnoreCase("case")) {
+            iconLocator = deleteCaseIconLocator;
+        } else if (action.equalsIgnoreCase("delete") && typeOfTestSubject.equalsIgnoreCase("suite")) {
+            iconLocator = deleteSuiteIconLocator;
+        }
+        WebElement icon = driver.findElement(By.xpath(String.format(iconLocator, caseOrSuiteName)));
+        wait.until(ExpectedConditions.elementToBeClickable(icon));
+        icon.click();
     }
 
     public void confirmDeleteCase() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(DELETE_PERMANENTLY_BUTTON));
         driver.findElement(DELETE_PERMANENTLY_BUTTON).click();
         driver.findElement(REPEAT_DELETE_PERMANENTLY_BUTTON).click();
     }
@@ -67,16 +97,10 @@ public class SuitesAndCasesPage extends BasePage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(PAGE_TITLE));
     }
 
-    public void editCase(String caseName) {
-        Actions actions = new Actions(driver);
-        WebElement scrolling = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.format(caseLocator, caseName))));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(0, arguments[0].scrollHeight)", scrolling);
-        WebElement caseTitle = driver.findElement(By.xpath(String.format(caseLocator, caseName)));
-        actions.moveToElement(caseTitle).build().perform();
-        driver.findElement(By.xpath(String.format(editCaseIconLocator, caseName))).click();
-    }
-
     public void clickCreateSuiteButton() {
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("[class='blockUI blockOverlay']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(ADD_SUITE_BUTTON));
+        wait.until(ExpectedConditions.elementToBeClickable(ADD_SUITE_BUTTON));
         driver.findElement(ADD_SUITE_BUTTON).click();
     }
 
@@ -86,39 +110,18 @@ public class SuitesAndCasesPage extends BasePage {
         driver.findElement(SUBMIT_SUITE_BUTTON).click();
     }
 
-    public boolean isSuiteExist(String suiteName) {
-        List<WebElement> testSuitesList = driver.findElements(ALL_SUITES);
-        boolean isSuiteExist = false;
-        for (WebElement testSuite : testSuitesList) {
-            if (testSuite.getText().equals(suiteName)) {
-                isSuiteExist = true;
-            }
-        }
-        return isSuiteExist;
-    }
-
     public void openCaseTab() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(CASE_TAB));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("[class='blockUI blockOverlay']")));
+//        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("editSectionDialog")));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(SUBMIT_SUITE_BUTTON));
+        wait.until(ExpectedConditions.elementToBeClickable(CASE_TAB));
         driver.findElement(CASE_TAB).click();
-    }
-
-    public void deleteSuite(String suiteName) {
-        Actions actions = new Actions(driver);
-        WebElement scrolling = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.format(suiteLocator, suiteName))));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(0, arguments[0].scrollHeight)", scrolling);
-        WebElement suiteTitle = driver.findElement(By.xpath(String.format(suiteLocator, suiteName)));
-        actions.moveToElement(suiteTitle).build().perform();
-        driver.findElement(By.xpath(String.format(deleteSuiteIconLocator, suiteName))).click();
     }
 
     public void confirmDeleteSuite() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(WARNING_MESSAGE_IN_CONFIRMATION_DELETE_SUITE_WINDOW));
         driver.findElement(DELETE_SUITE_CHECKBOX).click();
         driver.findElement(CONFIRM_DELETE_SUITE_BUTTON).click();
-    }
-
-    public void editSuite(String suiteName) {
-        driver.findElement(By.xpath(String.format(editSuiteIconLocator, suiteName))).click();
     }
 
     public void updateSuite(String newSuiteName, String newSuiteDescription) {
@@ -129,5 +132,4 @@ public class SuitesAndCasesPage extends BasePage {
         driver.findElement(SUITE_DESCRIPTION).sendKeys(newSuiteDescription);
         driver.findElement(SUBMIT_SUITE_BUTTON).click();
     }
-
 }

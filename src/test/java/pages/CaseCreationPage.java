@@ -23,6 +23,7 @@ public class CaseCreationPage extends BasePage {
     public void createCase(TestCase testCase) {
         driver.findElement(TITLE).sendKeys(testCase.getTitle());
         new Dropdown(driver, "Section").select(testCase.getSection());
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("[class='blockUI blockOverlay']")));
         new Dropdown(driver, "Template").select(testCase.getTemplate());
         new Dropdown(driver, "Type").select(testCase.getType());
         driver.findElement(ESTIMATE).sendKeys(testCase.getEstimate());
@@ -38,6 +39,7 @@ public class CaseCreationPage extends BasePage {
         driver.findElement(TITLE).clear();
         driver.findElement(TITLE).sendKeys(testCase.getTitle());
         new Dropdown(driver, "Section").select(testCase.getSection());
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("[class='blockUI blockOverlay']")));
         new Dropdown(driver, "Template").select(testCase.getTemplate());
         new Dropdown(driver, "Type").select(testCase.getType());
         driver.findElement(ESTIMATE).clear();
