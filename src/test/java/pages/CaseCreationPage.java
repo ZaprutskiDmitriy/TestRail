@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import models.TestCase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -20,6 +21,7 @@ public class CaseCreationPage extends BasePage {
         super(driver);
     }
 
+    @Step("Creating case with title '{testCase.title}'")
     public void createCase(TestCase testCase) {
         driver.findElement(TITLE).sendKeys(testCase.getTitle());
         new Dropdown(driver, "Section").select(testCase.getSection());
@@ -35,6 +37,7 @@ public class CaseCreationPage extends BasePage {
         driver.findElement(EXPECTED_RESULT).sendKeys(testCase.getExpectedResults());
     }
 
+    @Step("Changing a primary case on case with title '{testCase.title}'")
     public void updateCase(TestCase testCase) {
         driver.findElement(TITLE).clear();
         driver.findElement(TITLE).sendKeys(testCase.getTitle());

@@ -11,7 +11,7 @@ public class ProjectTest extends BaseTest {
 
     static Faker faker = new Faker();
 
-    @Test
+    @Test(description = "Check if the project can be created")
     public void projectShouldBeCreated() {
         String projectName = faker.app().name() + faker.number().randomDigit();
         String projectAnnouncement = faker.app().version();
@@ -24,7 +24,7 @@ public class ProjectTest extends BaseTest {
         assertTrue(dashboardPage.isProjectExist(projectName), "Project was not created");
     }
 
-    @Test
+    @Test(description = "Check if the project can be updated")
     public void projectShouldBeUpdated() {
         String projectName = faker.app().name() + faker.number().randomDigit();
         String newProjectName = faker.book().title() + faker.number().randomDigit();
@@ -42,7 +42,7 @@ public class ProjectTest extends BaseTest {
         assertTrue(dashboardPage.isProjectExist(newProjectName), "Project was not updated");
     }
 
-    @Test
+    @Test(description = "Check if the project can be deleted")
     public void projectShouldBeDeleted() {
         String projectName = faker.app().name() + faker.number().randomDigit();
         String projectAnnouncement = faker.app().version();

@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -24,6 +25,7 @@ public class ProjectCreationPage extends BasePage {
         }
     }
 
+    @Step("Creating project with title '{projectName}'")
     public void createProject(String projectName, String projectAnnouncement, Type type) {
         driver.findElement(PROJECT_NAME).sendKeys(projectName);
         driver.findElement(PROJECT_ANNOUNCEMENT).sendKeys(projectAnnouncement);
@@ -31,6 +33,7 @@ public class ProjectCreationPage extends BasePage {
         driver.findElement(ADD_PROJECT_BUTTON).click();
     }
 
+    @Step("Changing a primary project on project with title '{projectName}'")
     public void updateProject(String projectName, String projectAnnouncement, Type type) {
         driver.findElement(PROJECT_NAME).clear();
         driver.findElement(PROJECT_NAME).sendKeys(projectName);

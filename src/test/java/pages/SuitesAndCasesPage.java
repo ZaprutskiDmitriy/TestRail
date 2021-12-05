@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -40,6 +41,7 @@ public class SuitesAndCasesPage extends BasePage {
         driver.findElement(ADD_CASE_BUTTON).click();
     }
 
+    @Step("Сhecking the existence of the {typeOfTestSubject} '{caseOrSuiteName}'")
     public boolean isCaseOrSuiteExist(String caseOrSuiteName, String typeOfTestSubject) {
         By locator = null;
         if (typeOfTestSubject.equalsIgnoreCase("case")) {
@@ -104,6 +106,7 @@ public class SuitesAndCasesPage extends BasePage {
         driver.findElement(ADD_SUITE_BUTTON).click();
     }
 
+    @Step("Creating suite with title '{suiteName}'")
     public void createSuite(String suiteName, String suiteDescription) {
         driver.findElement(SUITE_NAME).sendKeys(suiteName);
         driver.findElement(SUITE_DESCRIPTION).sendKeys(suiteDescription);
@@ -112,7 +115,6 @@ public class SuitesAndCasesPage extends BasePage {
 
     public void openCaseTab() {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("[class='blockUI blockOverlay']")));
-//        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("editSectionDialog")));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(SUBMIT_SUITE_BUTTON));
         wait.until(ExpectedConditions.elementToBeClickable(CASE_TAB));
         driver.findElement(CASE_TAB).click();
@@ -124,6 +126,7 @@ public class SuitesAndCasesPage extends BasePage {
         driver.findElement(CONFIRM_DELETE_SUITE_BUTTON).click();
     }
 
+    @Step("Changing a primary suite on suite with title '{newSuiteName}'")
     public void updateSuite(String newSuiteName, String newSuiteDescription) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(SUBMIT_SUITE_BUTTON));
         driver.findElement(SUITE_NAME).clear();

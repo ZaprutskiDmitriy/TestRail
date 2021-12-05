@@ -1,6 +1,7 @@
 package tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -31,7 +32,7 @@ public class BaseTest {
     CaseDetailsPage caseDetailsPage;
 
     @Parameters({"browser", "headless"})
-    @BeforeMethod
+    @BeforeMethod(description = "Opening browser")
     public void setUp(@Optional("chrome") String browser, @Optional("headless") String headless, ITestContext context) {
         if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
@@ -64,7 +65,7 @@ public class BaseTest {
         caseDetailsPage = new CaseDetailsPage(driver);
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterMethod(description = "Closing browser", alwaysRun = true)
     public void close() {
         if (driver != null) {
             driver.quit();

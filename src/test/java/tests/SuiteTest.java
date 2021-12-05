@@ -10,7 +10,7 @@ public class SuiteTest extends BaseTest {
 
     static Faker faker = new Faker();
 
-    @Test
+    @Test(description = "Check if the test suite can be created")
     public void suiteShouldBeCreated() {
         String suiteName = faker.country().name() + faker.number().randomDigit();
         String suiteDescription = faker.country().capital() + faker.number().randomDigit();
@@ -26,7 +26,7 @@ public class SuiteTest extends BaseTest {
         assertTrue(suitesAndCasesPage.isCaseOrSuiteExist(suiteName, "suite"), "Suite was not created");
     }
 
-    @Test
+    @Test(description = "Check if the test suite can be updated")
     public void suiteShouldBeUpdated() {
         String suiteName = faker.country().name() + faker.number().randomDigit();
         String newSuiteName = faker.currency().name() + faker.number().randomDigit();
@@ -47,7 +47,7 @@ public class SuiteTest extends BaseTest {
         assertTrue(suitesAndCasesPage.isCaseOrSuiteExist(newSuiteName, "suite"), "Suite was not updated");
     }
 
-    @Test
+    @Test(description = "Check if the test suite can be deleted")
     public void suiteShouldBeDeleted() {
         String suiteName = faker.country().name() + faker.number().randomDigit();
         String suiteDescription = faker.country().capital();
