@@ -4,6 +4,8 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.opera.OperaDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.*;
@@ -30,7 +32,7 @@ public class BaseTest {
 
     @Parameters({"browser", "headless"})
     @BeforeMethod
-    public void setUp(@Optional("chrome") String browser, @Optional("") String headless, ITestContext context) {
+    public void setUp(@Optional("chrome") String browser, @Optional("headless") String headless, ITestContext context) {
         if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
             ChromeOptions chromeOptions = new ChromeOptions();
@@ -41,6 +43,13 @@ public class BaseTest {
         } else if (browser.equalsIgnoreCase("opera")) {
             WebDriverManager.operadriver().setup();
             driver = new OperaDriver();
+        } else if (browser.equalsIgnoreCase("firefox")) {
+            WebDriverManager.firefoxdriver().setup();
+            FirefoxOptions firefoxOptions = new FirefoxOptions();
+            if (headless.equalsIgnoreCase("headless")) {
+                firefoxOptions.addArguments("--headless");
+            }
+            driver = new FirefoxDriver(firefoxOptions);
         }
         context.setAttribute("driver", driver);
         driver.manage().window().maximize();
