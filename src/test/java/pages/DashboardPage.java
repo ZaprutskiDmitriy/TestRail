@@ -38,7 +38,7 @@ public class DashboardPage extends BasePage {
         driver.findElement(ADD_PROJECT_BUTTON).click();
     }
 
-    @Step("Сhecking the existence of the project '{projectName}'")
+    @Step("Checking the existence of the project '{projectName}'")
     public boolean isProjectExist(String projectName) {
         List<WebElement> projectsList = driver.findElements(ALL_PROJECTS);
         boolean isProjectExist = false;

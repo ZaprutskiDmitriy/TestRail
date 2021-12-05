@@ -41,7 +41,7 @@ public class SuitesAndCasesPage extends BasePage {
         driver.findElement(ADD_CASE_BUTTON).click();
     }
 
-    @Step("Сhecking the existence of the {typeOfTestSubject} '{caseOrSuiteName}'")
+    @Step("Checking the existence of the {typeOfTestSubject} '{caseOrSuiteName}'")
     public boolean isCaseOrSuiteExist(String caseOrSuiteName, String typeOfTestSubject) {
         By locator = null;
         if (typeOfTestSubject.equalsIgnoreCase("case")) {
@@ -73,8 +73,14 @@ public class SuitesAndCasesPage extends BasePage {
 
     public void clickDeleteOrEditIcon(String caseOrSuiteName, String action, String typeOfTestSubject) {
         String iconLocator = null;
-        scroll(caseLocator, caseOrSuiteName);
-        hover(caseLocator, caseOrSuiteName);
+        String targetForHoverLocator = null;
+        if (typeOfTestSubject.equalsIgnoreCase("case")) {
+            targetForHoverLocator = caseLocator;
+        } else if (typeOfTestSubject.equalsIgnoreCase("suite")) {
+            targetForHoverLocator = suiteLocator;
+        }
+        scroll(targetForHoverLocator, caseOrSuiteName);
+        hover(targetForHoverLocator, caseOrSuiteName);
         if (action.equalsIgnoreCase("edit") && typeOfTestSubject.equalsIgnoreCase("case")) {
             iconLocator = editCaseIconLocator;
         } else if (action.equalsIgnoreCase("edit") && typeOfTestSubject.equalsIgnoreCase("suite")) {
