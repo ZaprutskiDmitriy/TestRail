@@ -13,7 +13,7 @@ public class DashboardPage extends BasePage {
     private static final By LOGOUT_BUTTON = By.id("navigation-user-logout");
     private static final By ADD_PROJECT_BUTTON = By.id("sidebar-projects-add");
     private static final By ALL_PROJECTS = By.cssSelector(".summary-title");
-    private String projectLocator = "//*[contains(text(),'%s')]";
+    private String projectLocator = "//div[@id='content_container']/descendant::a[text()=\"%s\"]";
 
     public DashboardPage(WebDriver driver) {
         super(driver);
@@ -32,19 +32,19 @@ public class DashboardPage extends BasePage {
         driver.findElement(LOGOUT_BUTTON).click();
     }
 
-    public void createProject() {
+    public void clickCreateProjectButton() {
         driver.findElement(ADD_PROJECT_BUTTON).click();
     }
 
     public boolean isProjectExist(String projectName) {
         List<WebElement> projectsList = driver.findElements(ALL_PROJECTS);
-        boolean isProjectCreated = false;
+        boolean isProjectExist = false;
         for (WebElement project : projectsList) {
             if (project.getText().equals(projectName)) {
-                isProjectCreated = true;
+                isProjectExist = true;
             }
         }
-        return isProjectCreated;
+        return isProjectExist;
     }
 
     public void openProject(String projectName) {

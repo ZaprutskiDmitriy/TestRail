@@ -24,8 +24,17 @@ public class ProjectCreationPage extends BasePage {
         }
     }
 
-    public void insertProjectInfo(String projectName, String projectAnnouncement, Type type) {
+    public void createProject(String projectName, String projectAnnouncement, Type type) {
         driver.findElement(PROJECT_NAME).sendKeys(projectName);
+        driver.findElement(PROJECT_ANNOUNCEMENT).sendKeys(projectAnnouncement);
+        selectType(type);
+        driver.findElement(ADD_PROJECT_BUTTON).click();
+    }
+
+    public void updateProject(String projectName, String projectAnnouncement, Type type) {
+        driver.findElement(PROJECT_NAME).clear();
+        driver.findElement(PROJECT_NAME).sendKeys(projectName);
+        driver.findElement(PROJECT_ANNOUNCEMENT).clear();
         driver.findElement(PROJECT_ANNOUNCEMENT).sendKeys(projectAnnouncement);
         selectType(type);
         driver.findElement(ADD_PROJECT_BUTTON).click();
