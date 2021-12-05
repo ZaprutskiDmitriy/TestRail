@@ -7,7 +7,7 @@ public class TestCaseFactory {
     static Faker faker = new Faker();
 
     public static TestCase getCase() {
-        return new TestCase(faker.company().industry(),
+        return new TestCase(faker.company().industry() + faker.number().randomDigit(),
                 "",
                 "Test Case (Text)",
                 "Functional",
@@ -21,7 +21,7 @@ public class TestCaseFactory {
     }
 
     public static TestCase getSecondCase() {
-        return new TestCase(faker.company().name(),
+        return new TestCase(faker.company().name() + faker.number().randomDigit(),
                 "",
                 "Test Case (Text)",
                 "Regression",

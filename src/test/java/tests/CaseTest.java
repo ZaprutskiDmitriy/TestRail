@@ -21,7 +21,7 @@ public class CaseTest extends BaseTest {
         caseCreationPage.createCase(testCase);
         caseCreationPage.clickSaveTestCaseButton();
         caseDetailsPage.openCaseSection();
-        assertTrue(suitesAndCasesPage.isCaseExist(testCase.getTitle()), "Test case was not created");
+        assertTrue(suitesAndCasesPage.isCaseOrSuiteExist(testCase.getTitle(), "case"), "Test case was not created");
     }
 
     @Test
@@ -37,13 +37,13 @@ public class CaseTest extends BaseTest {
         caseCreationPage.clickSaveTestCaseButton();
         caseDetailsPage.isPageOpened();
         caseDetailsPage.openCaseSection();
-        suitesAndCasesPage.editCase(testCase.getTitle());
+        suitesAndCasesPage.clickDeleteOrEditIcon(testCase.getTitle(), "edit", "case");
         TestCase newTestCase = TestCaseFactory.getSecondCase();
         caseCreationPage.updateCase(newTestCase);
         caseCreationPage.clickSaveTestCaseButton();
         caseDetailsPage.isPageOpened();
         caseDetailsPage.openCaseSection();
-        assertTrue(suitesAndCasesPage.isCaseExist(newTestCase.getTitle()), "Test case was not updated");
+        assertTrue(suitesAndCasesPage.isCaseOrSuiteExist(newTestCase.getTitle(), "case"), "Test case was not updated");
     }
 
     @Test
@@ -59,9 +59,9 @@ public class CaseTest extends BaseTest {
         caseCreationPage.clickSaveTestCaseButton();
         caseDetailsPage.isPageOpened();
         caseDetailsPage.openCaseSection();
-        suitesAndCasesPage.deleteCase(testCase.getTitle());
+        suitesAndCasesPage.clickDeleteOrEditIcon(testCase.getTitle(), "delete", "case");
         suitesAndCasesPage.confirmDeleteCase();
         suitesAndCasesPage.openCaseTab();
-        assertFalse(suitesAndCasesPage.isCaseExist(testCase.getTitle()), "Test case has not been deleted");
+        assertFalse(suitesAndCasesPage.isCaseOrSuiteExist(testCase.getTitle(), "case"), "Test case has not been deleted");
     }
 }
