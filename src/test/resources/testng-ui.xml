@@ -17,6 +17,7 @@
     </test>
     <test name="Thread #2 (Opera)">
         <parameter name="browser" value="opera"/>
+        <parameter name="headless" value="not headless"/>
         <classes>
             <class name="tests.LoginTest"/>
             <class name="tests.ProjectTest"/>

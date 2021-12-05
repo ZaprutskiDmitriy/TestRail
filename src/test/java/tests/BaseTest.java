@@ -30,7 +30,7 @@ public class BaseTest {
 
     @Parameters({"browser", "headless"})
     @BeforeMethod
-    public void setUp(@Optional("chrome") String browser, @Optional("headless") String headless, ITestContext context) {
+    public void setUp(@Optional("chrome") String browser, @Optional("") String headless, ITestContext context) {
         if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
             ChromeOptions chromeOptions = new ChromeOptions();
