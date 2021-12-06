@@ -63,7 +63,7 @@ public class SuitesAndCasesPage extends BasePage {
     public void scroll(String targetLocator, String targetName) {
         WebElement targetTitle = driver.findElement(By.xpath(String.format(targetLocator, targetName)));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", targetTitle);
-        ((JavascriptExecutor) driver).executeScript("scrollBy(0, -50)");
+        ((JavascriptExecutor) driver).executeScript("scrollBy(0, -100)");
     }
 
     public void hover(String targetLocator, String targetName) {
