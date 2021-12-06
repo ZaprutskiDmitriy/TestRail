@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -14,6 +15,7 @@ public class SuitesAndCasesPage extends BasePage {
     private static final By REPEAT_DELETE_PERMANENTLY_BUTTON = By.xpath("//*[@id='casesDeletionConfirmationDialog']/descendant::a[contains(text(),'Delete Permanently')]");
     private static final By PAGE_TITLE = By.xpath("//*[@id='content-header']/descendant::div[contains(text(),'Test Cases')]");
     private static final By ADD_SUITE_BUTTON = By.id("addSection");
+    private static final By ADD_SUITE_BUTTON_FOR_PROJECT_WITHOUT_SUITES = By.id("addSectionInline");
     private static final By SUITE_NAME = By.name("editSectionName");
     private static final By SUITE_DESCRIPTION = By.id("editSectionDescription_display");
     private static final By SUBMIT_SUITE_BUTTON = By.id("editSectionSubmit");
@@ -40,6 +42,7 @@ public class SuitesAndCasesPage extends BasePage {
         driver.findElement(ADD_CASE_BUTTON).click();
     }
 
+    @Step("Checking the existence of the {typeOfTestSubject} '{caseOrSuiteName}'")
     public boolean isCaseOrSuiteExist(String caseOrSuiteName, String typeOfTestSubject) {
         By locator = null;
         if (typeOfTestSubject.equalsIgnoreCase("case")) {
@@ -60,7 +63,7 @@ public class SuitesAndCasesPage extends BasePage {
     public void scroll(String targetLocator, String targetName) {
         WebElement targetTitle = driver.findElement(By.xpath(String.format(targetLocator, targetName)));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", targetTitle);
-        ((JavascriptExecutor) driver).executeScript("scrollBy(0, -150)");
+        ((JavascriptExecutor) driver).executeScript("scrollBy(0, -100)");
     }
 
     public void hover(String targetLocator, String targetName) {
@@ -71,8 +74,14 @@ public class SuitesAndCasesPage extends BasePage {
 
     public void clickDeleteOrEditIcon(String caseOrSuiteName, String action, String typeOfTestSubject) {
         String iconLocator = null;
-        scroll(caseLocator, caseOrSuiteName);
-        hover(caseLocator, caseOrSuiteName);
+        String targetForHoverLocator = null;
+        if (typeOfTestSubject.equalsIgnoreCase("case")) {
+            targetForHoverLocator = caseLocator;
+        } else if (typeOfTestSubject.equalsIgnoreCase("suite")) {
+            targetForHoverLocator = suiteLocator;
+        }
+        scroll(targetForHoverLocator, caseOrSuiteName);
+        hover(targetForHoverLocator, caseOrSuiteName);
         if (action.equalsIgnoreCase("edit") && typeOfTestSubject.equalsIgnoreCase("case")) {
             iconLocator = editCaseIconLocator;
         } else if (action.equalsIgnoreCase("edit") && typeOfTestSubject.equalsIgnoreCase("suite")) {
@@ -99,11 +108,17 @@ public class SuitesAndCasesPage extends BasePage {
 
     public void clickCreateSuiteButton() {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("[class='blockUI blockOverlay']")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(ADD_SUITE_BUTTON));
-        wait.until(ExpectedConditions.elementToBeClickable(ADD_SUITE_BUTTON));
-        driver.findElement(ADD_SUITE_BUTTON).click();
+        List<WebElement> testSuitesList = driver.findElements(ALL_SUITES);
+        if (testSuitesList.isEmpty()) {
+            wait.until(ExpectedConditions.elementToBeClickable(ADD_SUITE_BUTTON_FOR_PROJECT_WITHOUT_SUITES));
+            driver.findElement(ADD_SUITE_BUTTON_FOR_PROJECT_WITHOUT_SUITES).click();
+        } else {
+            wait.until(ExpectedConditions.elementToBeClickable(ADD_SUITE_BUTTON));
+            driver.findElement(ADD_SUITE_BUTTON).click();
+        }
     }
 
+    @Step("Creating suite with title '{suiteName}'")
     public void createSuite(String suiteName, String suiteDescription) {
         driver.findElement(SUITE_NAME).sendKeys(suiteName);
         driver.findElement(SUITE_DESCRIPTION).sendKeys(suiteDescription);
@@ -112,7 +127,6 @@ public class SuitesAndCasesPage extends BasePage {
 
     public void openCaseTab() {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("[class='blockUI blockOverlay']")));
-//        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("editSectionDialog")));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(SUBMIT_SUITE_BUTTON));
         wait.until(ExpectedConditions.elementToBeClickable(CASE_TAB));
         driver.findElement(CASE_TAB).click();
@@ -124,7 +138,9 @@ public class SuitesAndCasesPage extends BasePage {
         driver.findElement(CONFIRM_DELETE_SUITE_BUTTON).click();
     }
 
+    @Step("Changing a primary suite on suite with title '{newSuiteName}'")
     public void updateSuite(String newSuiteName, String newSuiteDescription) {
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("[class='blockUI blockOverlay']")));
         wait.until(ExpectedConditions.visibilityOfElementLocated(SUBMIT_SUITE_BUTTON));
         driver.findElement(SUITE_NAME).clear();
         driver.findElement(SUITE_NAME).sendKeys(newSuiteName);

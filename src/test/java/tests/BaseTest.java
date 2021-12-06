@@ -31,7 +31,7 @@ public class BaseTest {
     CaseDetailsPage caseDetailsPage;
 
     @Parameters({"browser", "headless"})
-    @BeforeMethod
+    @BeforeMethod(description = "Opening browser")
     public void setUp(@Optional("chrome") String browser, @Optional("headless") String headless, ITestContext context) {
         if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
@@ -64,7 +64,7 @@ public class BaseTest {
         caseDetailsPage = new CaseDetailsPage(driver);
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterMethod(description = "Closing browser", alwaysRun = true)
     public void close() {
         if (driver != null) {
             driver.quit();

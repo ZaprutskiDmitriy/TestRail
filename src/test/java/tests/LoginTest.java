@@ -6,15 +6,15 @@ import static org.testng.Assert.assertEquals;
 
 public class LoginTest extends BaseTest {
 
-    @Test
-    public void loginWithValidCredentionals() {
+    @Test(description = "Check the login form with valid login and password values")
+    public void loginWithValidCredentials() {
         loginPage.open();
         loginPage.login(USERNAME, PASSWORD);
         String title = dashboardPage.getHeader();
         assertEquals(title, "dashboard", "Home page was not opened");
     }
 
-    @Test
+    @Test(description = "Check the login form with an empty login field")
     public void loginWithEmptyLoginField() {
         loginPage.open();
         loginPage.login("", PASSWORD);
@@ -22,7 +22,7 @@ public class LoginTest extends BaseTest {
         assertEquals(errorMessage, "Email/Login is required.", "Error text is not correct");
     }
 
-    @Test
+    @Test(description = "Check the login form with an empty password field")
     public void loginWithEmptyPasswordField() {
         loginPage.open();
         loginPage.login(USERNAME, "");
@@ -30,8 +30,8 @@ public class LoginTest extends BaseTest {
         assertEquals(errorMessage, "Password is required.", "Error text is not correct");
     }
 
-    @Test
-    public void loginWithInvalidCredentionals() {
+    @Test(description = "Check the login form with invalid login and password values")
+    public void loginWithInvalidCredentials() {
         loginPage.open();
         loginPage.login("test@test.ru", "12345");
         String errorMessage = loginPage.getError();
@@ -39,7 +39,7 @@ public class LoginTest extends BaseTest {
                 "Error text is not correct");
     }
 
-    @Test
+    @Test(description = "Check logout function")
     public void logout() {
         loginPage.open();
         loginPage.login(USERNAME, PASSWORD);

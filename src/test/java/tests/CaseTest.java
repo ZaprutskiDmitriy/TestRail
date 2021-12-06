@@ -9,7 +9,7 @@ import static org.testng.Assert.assertTrue;
 
 public class CaseTest extends BaseTest {
 
-    @Test
+    @Test(description = "Check if the test case can be created")
     public void caseShouldBeCreated() {
         loginPage.open();
         loginPage.login(USERNAME, PASSWORD);
@@ -24,7 +24,7 @@ public class CaseTest extends BaseTest {
         assertTrue(suitesAndCasesPage.isCaseOrSuiteExist(testCase.getTitle(), "case"), "Test case was not created");
     }
 
-    @Test
+    @Test(description = "Check if the test case can be updated")
     public void caseShouldBeUpdated() {
         loginPage.open();
         loginPage.login(USERNAME, PASSWORD);
@@ -38,7 +38,7 @@ public class CaseTest extends BaseTest {
         caseDetailsPage.isPageOpened();
         caseDetailsPage.openCaseSection();
         suitesAndCasesPage.clickDeleteOrEditIcon(testCase.getTitle(), "edit", "case");
-        TestCase newTestCase = TestCaseFactory.getSecondCase();
+        TestCase newTestCase = TestCaseFactory.getCaseWithAnotherData();
         caseCreationPage.updateCase(newTestCase);
         caseCreationPage.clickSaveTestCaseButton();
         caseDetailsPage.isPageOpened();
@@ -46,7 +46,7 @@ public class CaseTest extends BaseTest {
         assertTrue(suitesAndCasesPage.isCaseOrSuiteExist(newTestCase.getTitle(), "case"), "Test case was not updated");
     }
 
-    @Test
+    @Test(description = "Check if the test case can be deleted")
     public void caseShouldBeDeleted() {
         loginPage.open();
         loginPage.login(USERNAME, PASSWORD);

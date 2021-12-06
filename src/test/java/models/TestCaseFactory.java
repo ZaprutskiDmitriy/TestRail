@@ -20,7 +20,7 @@ public class TestCaseFactory {
                 faker.howIMetYourMother().highFive());
     }
 
-    public static TestCase getSecondCase() {
+    public static TestCase getCaseWithAnotherData() {
         return new TestCase(faker.company().name() + faker.number().randomDigit(),
                 "",
                 "Test Case (Text)",

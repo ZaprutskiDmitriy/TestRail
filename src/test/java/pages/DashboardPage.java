@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,6 +28,7 @@ public class DashboardPage extends BasePage {
         return driver.findElement(TITLE).getText().toLowerCase();
     }
 
+    @Step("Logout")
     public void logout() {
         driver.findElement(USER_MENU).click();
         driver.findElement(LOGOUT_BUTTON).click();
@@ -36,6 +38,7 @@ public class DashboardPage extends BasePage {
         driver.findElement(ADD_PROJECT_BUTTON).click();
     }
 
+    @Step("Checking the existence of the project '{projectName}'")
     public boolean isProjectExist(String projectName) {
         List<WebElement> projectsList = driver.findElements(ALL_PROJECTS);
         boolean isProjectExist = false;
