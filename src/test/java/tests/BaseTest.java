@@ -1,10 +1,10 @@
 package tests;
 
-import adapters.ProjectAdapter;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.opera.OperaDriver;
@@ -30,7 +30,6 @@ public class BaseTest {
     CaseCreationPage caseCreationPage;
     AdministrationPage administrationPage;
     CaseDetailsPage caseDetailsPage;
-    ProjectAdapter projectAdapter;
 
     @Parameters({"browser", "headless"})
     @BeforeMethod(description = "Opening browser")
@@ -45,6 +44,9 @@ public class BaseTest {
         } else if (browser.equalsIgnoreCase("opera")) {
             WebDriverManager.operadriver().setup();
             driver = new OperaDriver();
+        } else if (browser.equalsIgnoreCase("edge")) {
+            WebDriverManager.edgedriver().setup();
+            driver = new EdgeDriver();
         } else if (browser.equalsIgnoreCase("firefox")) {
             WebDriverManager.firefoxdriver().setup();
             FirefoxOptions firefoxOptions = new FirefoxOptions();
@@ -64,7 +66,6 @@ public class BaseTest {
         caseCreationPage = new CaseCreationPage(driver);
         administrationPage = new AdministrationPage(driver);
         caseDetailsPage = new CaseDetailsPage(driver);
-        projectAdapter = new ProjectAdapter();
     }
 
     @AfterMethod(description = "Closing browser", alwaysRun = true)
