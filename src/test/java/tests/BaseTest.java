@@ -1,5 +1,6 @@
 package tests;
 
+import adapters.ProjectAdapter;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -25,14 +26,15 @@ public class BaseTest {
     DashboardPage dashboardPage;
     ProjectCreationPage projectCreationPage;
     ProjectPage projectPage;
-    SuitesAndCasesPage suitesAndCasesPage;
+    TestCasesTab testCasesTab;
     CaseCreationPage caseCreationPage;
     AdministrationPage administrationPage;
     CaseDetailsPage caseDetailsPage;
+    ProjectAdapter projectAdapter;
 
     @Parameters({"browser", "headless"})
     @BeforeMethod(description = "Opening browser")
-    public void setUp(@Optional("chrome") String browser, @Optional("headless") String headless, ITestContext context) {
+    public void setUp(@Optional("chrome") String browser, @Optional("not headless") String headless, ITestContext context) {
         if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
             ChromeOptions chromeOptions = new ChromeOptions();
@@ -58,10 +60,11 @@ public class BaseTest {
         dashboardPage = new DashboardPage(driver);
         projectCreationPage = new ProjectCreationPage(driver);
         projectPage = new ProjectPage(driver);
-        suitesAndCasesPage = new SuitesAndCasesPage(driver);
+        testCasesTab = new TestCasesTab(driver);
         caseCreationPage = new CaseCreationPage(driver);
         administrationPage = new AdministrationPage(driver);
         caseDetailsPage = new CaseDetailsPage(driver);
+        projectAdapter = new ProjectAdapter();
     }
 
     @AfterMethod(description = "Closing browser", alwaysRun = true)

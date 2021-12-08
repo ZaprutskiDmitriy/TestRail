@@ -15,13 +15,13 @@ public class CaseTest extends BaseTest {
         loginPage.login(USERNAME, PASSWORD);
         dashboardPage.openProject("TestProject");
         projectPage.openCaseTab();
-        suitesAndCasesPage.clickCreateCaseButton();
+        testCasesTab.clickCreateCaseButton();
         TestCase testCase = TestCaseFactory.getCase();
         caseCreationPage.isPageOpened();
         caseCreationPage.createCase(testCase);
         caseCreationPage.clickSaveTestCaseButton();
         caseDetailsPage.openCaseSection();
-        assertTrue(suitesAndCasesPage.isCaseOrSuiteExist(testCase.getTitle(), "case"), "Test case was not created");
+        assertTrue(testCasesTab.isCaseExist(testCase.getTitle()), "Test case was not created");
     }
 
     @Test(description = "Check if the test case can be updated")
@@ -30,20 +30,20 @@ public class CaseTest extends BaseTest {
         loginPage.login(USERNAME, PASSWORD);
         dashboardPage.openProject("TestProject");
         projectPage.openCaseTab();
-        suitesAndCasesPage.clickCreateCaseButton();
+        testCasesTab.clickCreateCaseButton();
         TestCase testCase = TestCaseFactory.getCase();
         caseCreationPage.isPageOpened();
         caseCreationPage.createCase(testCase);
         caseCreationPage.clickSaveTestCaseButton();
         caseDetailsPage.isPageOpened();
         caseDetailsPage.openCaseSection();
-        suitesAndCasesPage.clickDeleteOrEditIcon(testCase.getTitle(), "edit", "case");
+        testCasesTab.clickEditCase(testCase.getTitle());
         TestCase newTestCase = TestCaseFactory.getCaseWithAnotherData();
         caseCreationPage.updateCase(newTestCase);
         caseCreationPage.clickSaveTestCaseButton();
         caseDetailsPage.isPageOpened();
         caseDetailsPage.openCaseSection();
-        assertTrue(suitesAndCasesPage.isCaseOrSuiteExist(newTestCase.getTitle(), "case"), "Test case was not updated");
+        assertTrue(testCasesTab.isCaseExist(newTestCase.getTitle()), "Test case was not updated");
     }
 
     @Test(description = "Check if the test case can be deleted")
@@ -52,16 +52,16 @@ public class CaseTest extends BaseTest {
         loginPage.login(USERNAME, PASSWORD);
         dashboardPage.openProject("TestProject");
         projectPage.openCaseTab();
-        suitesAndCasesPage.clickCreateCaseButton();
+        testCasesTab.clickCreateCaseButton();
         TestCase testCase = TestCaseFactory.getCase();
         caseCreationPage.isPageOpened();
         caseCreationPage.createCase(testCase);
         caseCreationPage.clickSaveTestCaseButton();
         caseDetailsPage.isPageOpened();
         caseDetailsPage.openCaseSection();
-        suitesAndCasesPage.clickDeleteOrEditIcon(testCase.getTitle(), "delete", "case");
-        suitesAndCasesPage.confirmDeleteCase();
-        suitesAndCasesPage.openCaseTab();
-        assertFalse(suitesAndCasesPage.isCaseOrSuiteExist(testCase.getTitle(), "case"), "Test case has not been deleted");
+        testCasesTab.clickDeleteCase(testCase.getTitle());
+        testCasesTab.confirmDeleteCase();
+        testCasesTab.openCaseTab();
+        assertFalse(testCasesTab.isCaseExist(testCase.getTitle()), "Test case has not been deleted");
     }
 }
