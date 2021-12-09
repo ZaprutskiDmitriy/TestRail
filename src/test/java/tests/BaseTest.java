@@ -4,6 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.opera.OperaDriver;
@@ -25,14 +26,14 @@ public class BaseTest {
     DashboardPage dashboardPage;
     ProjectCreationPage projectCreationPage;
     ProjectPage projectPage;
-    SuitesAndCasesPage suitesAndCasesPage;
+    TestCasesTab testCasesTab;
     CaseCreationPage caseCreationPage;
     AdministrationPage administrationPage;
     CaseDetailsPage caseDetailsPage;
 
     @Parameters({"browser", "headless"})
     @BeforeMethod(description = "Opening browser")
-    public void setUp(@Optional("chrome") String browser, @Optional("headless") String headless, ITestContext context) {
+    public void setUp(@Optional("chrome") String browser, @Optional("not headless") String headless, ITestContext context) {
         if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
             ChromeOptions chromeOptions = new ChromeOptions();
@@ -43,6 +44,9 @@ public class BaseTest {
         } else if (browser.equalsIgnoreCase("opera")) {
             WebDriverManager.operadriver().setup();
             driver = new OperaDriver();
+        } else if (browser.equalsIgnoreCase("edge")) {
+            WebDriverManager.edgedriver().setup();
+            driver = new EdgeDriver();
         } else if (browser.equalsIgnoreCase("firefox")) {
             WebDriverManager.firefoxdriver().setup();
             FirefoxOptions firefoxOptions = new FirefoxOptions();
@@ -58,7 +62,7 @@ public class BaseTest {
         dashboardPage = new DashboardPage(driver);
         projectCreationPage = new ProjectCreationPage(driver);
         projectPage = new ProjectPage(driver);
-        suitesAndCasesPage = new SuitesAndCasesPage(driver);
+        testCasesTab = new TestCasesTab(driver);
         caseCreationPage = new CaseCreationPage(driver);
         administrationPage = new AdministrationPage(driver);
         caseDetailsPage = new CaseDetailsPage(driver);

@@ -19,11 +19,11 @@ public class SuiteTest extends BaseTest {
         loginPage.login(USERNAME, PASSWORD);
         dashboardPage.openProject("TestProject");
         projectPage.openCaseTab();
-        suitesAndCasesPage.isPageOpened();
-        suitesAndCasesPage.clickCreateSuiteButton();
-        suitesAndCasesPage.createSuite(suiteName, suiteDescription);
-        suitesAndCasesPage.openCaseTab();
-        assertTrue(suitesAndCasesPage.isCaseOrSuiteExist(suiteName, "suite"), "Suite was not created");
+        testCasesTab.isPageOpened();
+        testCasesTab.clickCreateSuiteButton();
+        testCasesTab.createSuite(suiteName, suiteDescription);
+        testCasesTab.openCaseTab();
+        assertTrue(testCasesTab.isSuiteExist(suiteName), "Suite was not created");
     }
 
     @Test(description = "Check if the test suite can be updated")
@@ -37,14 +37,12 @@ public class SuiteTest extends BaseTest {
         loginPage.login(USERNAME, PASSWORD);
         dashboardPage.openProject("TestProject");
         projectPage.openCaseTab();
-        suitesAndCasesPage.isPageOpened();
-        suitesAndCasesPage.clickCreateSuiteButton();
-        suitesAndCasesPage.createSuite(suiteName, suiteDescription);
-        suitesAndCasesPage.openCaseTab();
-        suitesAndCasesPage.clickDeleteOrEditIcon(suiteName, "edit", "suite");
-        suitesAndCasesPage.updateSuite(newSuiteName, newSuiteDescription);
-        suitesAndCasesPage.openCaseTab();
-        assertTrue(suitesAndCasesPage.isCaseOrSuiteExist(newSuiteName, "suite"), "Suite was not updated");
+        testCasesTab.isPageOpened();
+        testCasesTab.clickCreateSuiteButton();
+        testCasesTab.createSuite(suiteName, suiteDescription);
+        testCasesTab.clickEditSuite(suiteName);
+        testCasesTab.updateSuite(newSuiteName, newSuiteDescription);
+        assertTrue(testCasesTab.isSuiteExist(newSuiteName), "Suite was not updated");
     }
 
     @Test(description = "Check if the test suite can be deleted")
@@ -56,13 +54,12 @@ public class SuiteTest extends BaseTest {
         loginPage.login(USERNAME, PASSWORD);
         dashboardPage.openProject("TestProject");
         projectPage.openCaseTab();
-        suitesAndCasesPage.isPageOpened();
-        suitesAndCasesPage.clickCreateSuiteButton();
-        suitesAndCasesPage.createSuite(suiteName, suiteDescription);
-        suitesAndCasesPage.openCaseTab();
-        suitesAndCasesPage.clickDeleteOrEditIcon(suiteName, "delete", "suite");
-        suitesAndCasesPage.confirmDeleteSuite();
-        suitesAndCasesPage.openCaseTab();
-        assertFalse(suitesAndCasesPage.isCaseOrSuiteExist(suiteName,"suite"), "Suite has not been deleted");
+        testCasesTab.isPageOpened();
+        testCasesTab.clickCreateSuiteButton();
+        testCasesTab.createSuite(suiteName, suiteDescription);
+        testCasesTab.clickDeleteSuite(suiteName);
+        testCasesTab.confirmDeleteSuite();
+        testCasesTab.openCaseTab();
+        assertFalse(testCasesTab.isSuiteExist(suiteName), "Suite has not been deleted");
     }
 }
