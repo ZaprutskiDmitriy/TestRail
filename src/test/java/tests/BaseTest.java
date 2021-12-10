@@ -15,7 +15,7 @@ import utils.PropertyReader;
 
 import java.util.concurrent.TimeUnit;
 
-public class BaseTest {
+public class BaseTest extends ApiBaseTest {
 
     public static final String USERNAME = System.getenv().getOrDefault("TESTRAIL_USER",
             PropertyReader.getProperty("testrail.user"));
@@ -33,7 +33,7 @@ public class BaseTest {
 
     @Parameters({"browser", "headless"})
     @BeforeMethod(description = "Opening browser")
-    public void setUp(@Optional("chrome") String browser, @Optional("not headless") String headless, ITestContext context) {
+    public void setUp(@Optional("firefox") String browser, @Optional("not headless") String headless, ITestContext context) {
         if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
             ChromeOptions chromeOptions = new ChromeOptions();

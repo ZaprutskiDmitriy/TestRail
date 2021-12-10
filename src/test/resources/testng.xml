@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Test suite" parallel="tests" thread-count="2">
+<suite name="Test suite" parallel="tests" thread-count="3">
     <listeners>
         <listener class-name="utils.TestListener"/>
         <listener class-name="utils.AnnotationTransformer"/>
@@ -11,7 +11,7 @@
         <classes>
             <class name="tests.LoginTest"/>
             <class name="tests.ProjectTest"/>
-            <class name="tests.SuiteTest"/>
+            <class name="tests.SectionTest"/>
             <class name="tests.CaseTest"/>
         </classes>
     </test>
@@ -21,8 +21,15 @@
         <classes>
             <class name="tests.LoginTest"/>
             <class name="tests.ProjectTest"/>
-            <class name="tests.SuiteTest"/>
+            <class name="tests.SectionTest"/>
             <class name="tests.CaseTest"/>
+        </classes>
+    </test>
+    <test name="Thread #3 (API)">
+        <classes>
+            <class name="tests.ApiProjectTest"/>
+            <class name="tests.ApiSectionTest"/>
+            <class name="tests.ApiCaseTest"/>
         </classes>
     </test>
 </suite>

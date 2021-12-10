@@ -1,7 +1,7 @@
 package tests;
 
-import models.TestCase;
-import models.TestCaseFactory;
+import models.ui.TestCase;
+import models.ui.TestCaseFactory;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertFalse;

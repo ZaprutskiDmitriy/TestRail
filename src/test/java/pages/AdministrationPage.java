@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -16,10 +17,12 @@ public class AdministrationPage extends BasePage {
         super(driver);
     }
 
+    @Step("Deleting project with title '{projectName}'")
     public void deleteProject(String projectName) {
         driver.findElement(By.xpath(String.format(deleteProjectIconLocator, projectName))).click();
     }
 
+    @Step("Editing project with title '{projectName}'")
     public void editProject(String projectName) {
         driver.findElement(By.xpath(String.format(editProjectIconLocator, projectName))).click();
     }

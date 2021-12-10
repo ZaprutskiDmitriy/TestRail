@@ -1,4 +1,4 @@
-package models;
+package models.ui;
 
 import com.github.javafaker.Faker;
 
