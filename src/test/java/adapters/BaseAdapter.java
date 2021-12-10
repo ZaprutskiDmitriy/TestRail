@@ -11,7 +11,7 @@ public class BaseAdapter {
 
     public static final String BASE_URL_API = System.getenv().getOrDefault("TESTRAIL_API_URL",
             PropertyReader.getProperty("testrail.apiurl"));
-    public static final String BASIC_AUTH = System.getenv().getOrDefault("BASIC_AUTH",
+    public static final String BASIC_AUTH = System.getenv().getOrDefault("TESTRAIL_BASIC_AUTH",
             PropertyReader.getProperty("testrail.basicauth"));
     RequestSpecification specification;
 

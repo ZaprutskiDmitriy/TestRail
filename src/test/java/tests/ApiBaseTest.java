@@ -25,18 +25,18 @@ public class ApiBaseTest {
         caseAdapter = new CaseAdapter();
     }
 
-//    @BeforeSuite(description = "Test project creation")
-//    public void createTestProject() {
-//        projectAdapter = new ProjectAdapter();
-//        Project project = Project.builder().
-//                name("TestProject").
-//                announcement("Project for testing").
-//                isShowedAnnouncement(false).
-//                suiteMode(1).
-//                build();
-//
-//        projectAdapter.createProjectWithValidData(project, 200);
-//    }
+    @BeforeSuite(description = "Test project creation")
+    public void createTestProject() {
+        projectAdapter = new ProjectAdapter();
+        Project project = Project.builder().
+                name("TestProject").
+                announcement("Project for testing").
+                isShowedAnnouncement(false).
+                suiteMode(1).
+                build();
+
+        projectAdapter.createProjectWithValidData(project, 200);
+    }
 
     @BeforeMethod(description = "Finding id of test project and test suite")
     public void findId() {
@@ -44,10 +44,10 @@ public class ApiBaseTest {
         testSuiteId = suiteAdapter.getSuiteId(testProjectId, "Master");
     }
 
-//    @AfterSuite(description = "Deleting a test project")
-//    public void deleteTestProject() {
-//        projectAdapter = new ProjectAdapter();
-//        int id = projectAdapter.getProjectId("TestProject");
-//        projectAdapter.deleteProject(id);
-//    }
+    @AfterSuite(description = "Deleting a test project")
+    public void deleteTestProject() {
+        projectAdapter = new ProjectAdapter();
+        int id = projectAdapter.getProjectId("TestProject");
+        projectAdapter.deleteProject(id);
+    }
 }
