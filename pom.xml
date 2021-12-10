@@ -25,7 +25,7 @@
         <log4j.version>2.14.1</log4j.version>
         <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
         <mysql.version>8.0.27</mysql.version>
-        <suiteXmlFile>src/test/resources/testng-ui.xml</suiteXmlFile>
+        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
     </properties>
 
     <dependencies>
