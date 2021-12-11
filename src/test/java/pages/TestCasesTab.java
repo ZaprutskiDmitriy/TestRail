@@ -1,12 +1,14 @@
 package pages;
 
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
+@Log4j2
 public class TestCasesTab extends BasePage {
 
     private static final By ADD_CASE_BUTTON = By.id("sidebar-cases-add");
@@ -38,6 +40,7 @@ public class TestCasesTab extends BasePage {
     }
 
     public void clickCreateCaseButton() {
+        log.info("Click 'Add case' button");
         wait.until(ExpectedConditions.visibilityOfElementLocated(ADD_CASE_BUTTON));
         waitDisappearBlockingWindow();
         driver.findElement(ADD_CASE_BUTTON).click();
@@ -60,21 +63,25 @@ public class TestCasesTab extends BasePage {
 
     @Step("Checking the existence of the case with title '{caseName}'")
     public boolean isCaseExist(String caseName) {
+        log.info("Checking the existence of the case with title '{}'", caseName);
         return isEntityExist(caseName, ALL_CASES);
     }
 
     @Step("Checking the existence of the section with title '{sectionName}'")
     public boolean isSectionExist(String sectionName) {
+        log.info("Checking the existence of the section with title '{}'", sectionName);
         return isEntityExist(sectionName, ALL_SECTIONS);
     }
 
     private void scroll(String targetLocator, String targetName) {
+        log.info("Scrolling page to case or section with title '{}'", targetName);
         WebElement targetTitle = driver.findElement(By.xpath(String.format(targetLocator, targetName)));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", targetTitle);
         ((JavascriptExecutor) driver).executeScript("scrollBy(0, -200)");
     }
 
     private void hover(String targetLocator, String targetName) {
+        log.info("Hovering over the case or section with title '{}'", targetName);
         Actions actions = new Actions(driver);
         WebElement targetTitle = driver.findElement(By.xpath(String.format(targetLocator, targetName)));
         actions.moveToElement(targetTitle).build().perform();
@@ -86,6 +93,7 @@ public class TestCasesTab extends BasePage {
         hover(entityTitleLocator, entityName);
         WebElement icon = driver.findElement(By.xpath(String.format(iconActionLocator, entityName)));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.format(iconActionLocator, entityName))));
+        log.info("Click edit/delete icon");
         icon.click();
     }
 
@@ -110,6 +118,7 @@ public class TestCasesTab extends BasePage {
     }
 
     public void confirmDeleteCase() {
+        log.info("Confirmation delete case");
         wait.until(ExpectedConditions.visibilityOfElementLocated(DELETE_PERMANENTLY_BUTTON));
         driver.findElement(DELETE_PERMANENTLY_BUTTON).click();
         driver.findElement(REPEAT_DELETE_PERMANENTLY_BUTTON).click();
@@ -120,6 +129,7 @@ public class TestCasesTab extends BasePage {
     }
 
     public void clickCreateSectionButton() {
+        log.info("Click 'Add section' button");
         waitDisappearBlockingWindow();
         List<WebElement> testSectionsList = driver.findElements(ALL_SECTIONS);
         if (testSectionsList.isEmpty()) {
@@ -133,6 +143,7 @@ public class TestCasesTab extends BasePage {
 
     @Step("Creating section with title '{sectionName}'")
     public void createSection(String sectionName, String sectionDescription) {
+        log.info("Creating section with title '{}'", sectionName);
         waitDisappearBlockingWindow();
         do {
             driver.findElement(SECTION_NAME).sendKeys(sectionName);
@@ -143,6 +154,7 @@ public class TestCasesTab extends BasePage {
     }
 
     public void openCaseTab() {
+        log.info("Opening page containing Sections and Cases");
         waitDisappearBlockingWindow();
         wait.until(ExpectedConditions.invisibilityOfElementLocated(SUBMIT_SECTION_BUTTON));
         wait.until(ExpectedConditions.elementToBeClickable(CASE_TAB));
@@ -150,6 +162,7 @@ public class TestCasesTab extends BasePage {
     }
 
     public void confirmDeleteSection() {
+        log.info("Confirmation delete section");
         wait.until(ExpectedConditions.visibilityOfElementLocated(WARNING_MESSAGE_IN_CONFIRMATION_DELETE_SECTION_WINDOW));
         driver.findElement(DELETE_SECTION_CHECKBOX).click();
         driver.findElement(CONFIRM_DELETE_SECTION_BUTTON).click();
@@ -157,6 +170,7 @@ public class TestCasesTab extends BasePage {
 
     @Step("Creating new section with title '{newSectionName}'")
     public void updateSection(String newSectionName, String newSectionDescription) {
+        log.info("Updating primary section to section with title '{}'", newSectionName);
         waitDisappearBlockingWindow();
         wait.until(ExpectedConditions.visibilityOfElementLocated(SUBMIT_SECTION_BUTTON));
         driver.findElement(SECTION_NAME).clear();
