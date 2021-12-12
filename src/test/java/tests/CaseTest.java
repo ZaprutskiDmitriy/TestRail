@@ -1,7 +1,8 @@
 package tests;
 
-import models.TestCase;
-import models.TestCaseFactory;
+import io.qameta.allure.TmsLink;
+import models.ui.TestCase;
+import models.ui.TestCaseFactory;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertFalse;
@@ -9,6 +10,7 @@ import static org.testng.Assert.assertTrue;
 
 public class CaseTest extends BaseTest {
 
+    @TmsLink("46")
     @Test(description = "Check if the test case can be created")
     public void caseShouldBeCreated() {
         loginPage.open();
@@ -24,6 +26,7 @@ public class CaseTest extends BaseTest {
         assertTrue(testCasesTab.isCaseExist(testCase.getTitle()), "Test case was not created");
     }
 
+    @TmsLink("47")
     @Test(description = "Check if the test case can be updated")
     public void caseShouldBeUpdated() {
         loginPage.open();
@@ -46,6 +49,7 @@ public class CaseTest extends BaseTest {
         assertTrue(testCasesTab.isCaseExist(newTestCase.getTitle()), "Test case was not updated");
     }
 
+    @TmsLink("48")
     @Test(description = "Check if the test case can be deleted")
     public void caseShouldBeDeleted() {
         loginPage.open();

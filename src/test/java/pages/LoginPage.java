@@ -1,9 +1,11 @@
 package pages;
 
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+@Log4j2
 public class LoginPage extends BasePage {
 
     private static final By USER_NAME = By.name("name");
@@ -19,25 +21,30 @@ public class LoginPage extends BasePage {
     }
 
     public void open() {
+        log.info("Opening login page");
         driver.get(BASE_URL);
     }
 
     @Step("Login")
     public void login(String user, String password) {
+        log.info("Login with credentials: user - '{}', password - '{}'", user, password);
         driver.findElement(USER_NAME).sendKeys(user);
         driver.findElement(PASSWORD).sendKeys(password);
         driver.findElement(LOGIN_BUTTON).click();
     }
 
     public String getErrorLoginField() {
+        log.info("Getting error message for login form: '{}'", driver.findElement(ERROR_LOGIN).getText());
         return driver.findElement(ERROR_LOGIN).getText();
     }
 
     public String getErrorPasswordField() {
+        log.info("Getting error message for login form: '{}'", driver.findElement(ERROR_PASSWORD).getText());
         return driver.findElement(ERROR_PASSWORD).getText();
     }
 
     public String getError() {
+        log.info("Getting error message for login form: '{}'", driver.findElement(ERROR_MESSAGE).getText());
         return driver.findElement(ERROR_MESSAGE).getText();
     }
 

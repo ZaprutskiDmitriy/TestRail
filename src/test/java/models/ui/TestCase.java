@@ -1,4 +1,4 @@
-package models;
+package models.ui;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
