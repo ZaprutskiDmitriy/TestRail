@@ -1,11 +1,13 @@
 package tests;
 
+import io.qameta.allure.TmsLink;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 
 public class LoginTest extends BaseTest {
 
+    @TmsLink("25")
     @Test(description = "Check the login form with valid login and password values")
     public void loginWithValidCredentials() {
         loginPage.open();
@@ -14,6 +16,7 @@ public class LoginTest extends BaseTest {
         assertEquals(title, "dashboard", "Home page was not opened");
     }
 
+    @TmsLink("26")
     @Test(description = "Check the login form with an empty login field")
     public void loginWithEmptyLoginField() {
         loginPage.open();
@@ -22,6 +25,7 @@ public class LoginTest extends BaseTest {
         assertEquals(errorMessage, "Email/Login is required.", "Error text is not correct");
     }
 
+    @TmsLink("27")
     @Test(description = "Check the login form with an empty password field")
     public void loginWithEmptyPasswordField() {
         loginPage.open();
@@ -30,6 +34,7 @@ public class LoginTest extends BaseTest {
         assertEquals(errorMessage, "Password is required.", "Error text is not correct");
     }
 
+    @TmsLink("28")
     @Test(description = "Check the login form with invalid login and password values")
     public void loginWithInvalidCredentials() {
         loginPage.open();
@@ -39,6 +44,7 @@ public class LoginTest extends BaseTest {
                 "Error text is not correct");
     }
 
+    @TmsLink("29")
     @Test(description = "Check logout function")
     public void logout() {
         loginPage.open();

@@ -1,16 +1,17 @@
 package tests;
 
 import com.github.javafaker.Faker;
+import io.qameta.allure.TmsLink;
 import models.api.Project;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 
-
 public class ApiProjectTest extends ApiBaseTest {
 
     static Faker faker = new Faker();
 
+    @TmsLink("33")
     @Test(description = "Check if the project can be created by API")
     public void projectShouldBeCreatedByApi() {
         Project project = Project.builder().
@@ -24,6 +25,7 @@ public class ApiProjectTest extends ApiBaseTest {
         assertTrue(projectAdapter.isProjectExist(project.getName()), "Project was not created");
     }
 
+    @TmsLink("34")
     @Test(description = "Check if the project can be updated by API")
     public void projectShouldBeUpdatedByApi() {
         Project project = Project.builder().
@@ -32,7 +34,6 @@ public class ApiProjectTest extends ApiBaseTest {
                 isShowedAnnouncement(true).
                 suiteMode(faker.random().nextInt(1, 3)).
                 build();
-
         Project projectWithAnotherData = Project.builder().
                 name(faker.company().name() + faker.number().randomDigit()).
                 announcement(faker.color().hex()).
@@ -48,6 +49,7 @@ public class ApiProjectTest extends ApiBaseTest {
         assertTrue(projectAdapter.isProjectExist(projectWithAnotherData.getName()), "Project was not updated");
     }
 
+    @TmsLink("35")
     @Test(description = "Check if the project can be deleted by API")
     public void projectShouldBeDeletedByApi() {
         Project project = Project.builder().
@@ -64,6 +66,7 @@ public class ApiProjectTest extends ApiBaseTest {
         assertFalse(projectAdapter.isProjectExist(project.getName()), "Project was not deleted");
     }
 
+    @TmsLink("36")
     @Test(description = "Check that project will not be created with an empty title field")
     public void projectShouldNotBeCreatedByApiWithEmptyTitleField() {
         Project project = Project.builder().
@@ -77,6 +80,7 @@ public class ApiProjectTest extends ApiBaseTest {
         assertEquals(errorMessage, "Field :name is a required field.", "Project was created with an empty title field");
     }
 
+    @TmsLink("37")
     @Test(description = "Check that project will not be created with wrong value of suite mode")
     public void projectShouldNotBeCreatedByApiWithSuiteModeOutsideTheRangeFrom1To3() {
         Project project = Project.builder().

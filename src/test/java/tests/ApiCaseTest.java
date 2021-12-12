@@ -1,6 +1,7 @@
 package tests;
 
 import com.github.javafaker.Faker;
+import io.qameta.allure.TmsLink;
 import models.api.Case;
 import models.api.Section;
 import org.testng.annotations.Test;
@@ -10,6 +11,7 @@ import static org.testng.Assert.*;
 public class ApiCaseTest extends ApiBaseTest {
     static Faker faker = new Faker();
 
+    @TmsLink("49")
     @Test(description = "Check if the test case can be created by API")
     public void caseShouldBeCreatedByApi() {
         Section section = Section.builder().
@@ -29,6 +31,7 @@ public class ApiCaseTest extends ApiBaseTest {
         assertTrue(caseAdapter.isCaseExist(testcase.getTitle(), testProjectId, testSuiteId), "Case was not created");
     }
 
+    @TmsLink("50")
     @Test(description = "Check if the test case can be updated by API")
     public void caseShouldBeUpdatedByApi() {
         Section section = Section.builder().
@@ -57,6 +60,7 @@ public class ApiCaseTest extends ApiBaseTest {
         assertTrue(caseAdapter.isCaseExist(testcaseWithAnotherData.getTitle(), testProjectId, testSuiteId), "Case was not updated");
     }
 
+    @TmsLink("51")
     @Test(description = "Check if the test case can be deleted by API")
     public void caseShouldBeDeletedByApi() {
         Section section = Section.builder().
@@ -78,6 +82,7 @@ public class ApiCaseTest extends ApiBaseTest {
         assertFalse(caseAdapter.isCaseExist(testcase.getTitle(), testProjectId, testSuiteId), "Case was not deleted");
     }
 
+    @TmsLink("52")
     @Test(description = "Check that test case will not be created with an empty title field")
     public void caseShouldNotBeCreatedByApiWithEmptyTitleField() {
         Section section = Section.builder().
@@ -93,11 +98,11 @@ public class ApiCaseTest extends ApiBaseTest {
                 templateId(faker.random().nextInt(1, 3)).
                 sectionId(testSectionId).
                 build();
-
         String errorMessage = caseAdapter.createCaseWithInvalidData(testcase, testSectionId, 400).getError();
         assertEquals(errorMessage, "Field :title is a required field.", "Case was created with an empty title field");
     }
 
+    @TmsLink("53")
     @Test(description = "Check that test case will not be created with an empty template field")
     public void caseShouldNotBeCreatedByApiWithEmptyTemplateField() {
         Section section = Section.builder().
@@ -112,11 +117,11 @@ public class ApiCaseTest extends ApiBaseTest {
                 typeId(faker.random().nextInt(1, 11)).
                 sectionId(testSectionId).
                 build();
-
         String errorMessage = caseAdapter.createCaseWithInvalidData(testcase, testSectionId, 400).getError();
         assertEquals(errorMessage, "Field :template_id is not a valid template.", "Case was created with a wrong value of template field");
     }
 
+    @TmsLink("54")
     @Test(description = "Check that test case will not be created with an empty type field")
     public void caseShouldNotBeCreatedByApiWithEmptyTypeField() {
         Section section = Section.builder().
@@ -131,11 +136,11 @@ public class ApiCaseTest extends ApiBaseTest {
                 templateId(faker.random().nextInt(1, 3)).
                 sectionId(testSectionId).
                 build();
-
         String errorMessage = caseAdapter.createCaseWithInvalidData(testcase, testSectionId, 400).getError();
         assertEquals(errorMessage, "Field :type_id is not a valid case type.", "Case was created with a wrong value of type field");
     }
 
+    @TmsLink("55")
     @Test(description = "Check that test case will not be created with an empty priority field")
     public void caseShouldNotBeCreatedByApiWithEmptyPriorityField() {
         Section section = Section.builder().
@@ -150,7 +155,6 @@ public class ApiCaseTest extends ApiBaseTest {
                 typeId(faker.random().nextInt(1, 11)).
                 sectionId(testSectionId).
                 build();
-
         String errorMessage = caseAdapter.createCaseWithInvalidData(testcase, testSectionId, 400).getError();
         assertEquals(errorMessage, "Field :priority_id is not a valid priority.", "Case was created with a wrong value of priority field");
     }

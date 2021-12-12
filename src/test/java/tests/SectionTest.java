@@ -1,6 +1,7 @@
 package tests;
 
 import com.github.javafaker.Faker;
+import io.qameta.allure.TmsLink;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertFalse;
@@ -10,6 +11,7 @@ public class SectionTest extends BaseTest {
 
     static Faker faker = new Faker();
 
+    @TmsLink("38")
     @Test(description = "Check if the test section can be created")
     public void sectionShouldBeCreated() {
         String sectionName = faker.country().name() + faker.number().randomDigit();
@@ -26,6 +28,7 @@ public class SectionTest extends BaseTest {
         assertTrue(testCasesTab.isSectionExist(sectionName), "Section was not created");
     }
 
+    @TmsLink("39")
     @Test(description = "Check if the test section can be updated")
     public void sectionShouldBeUpdated() {
         String sectionName = faker.country().name() + faker.number().randomDigit();
@@ -45,6 +48,7 @@ public class SectionTest extends BaseTest {
         assertTrue(testCasesTab.isSectionExist(newSectionName), "Section was not updated");
     }
 
+    @TmsLink("40")
     @Test(description = "Check if the test section can be deleted")
     public void sectionShouldBeDeleted() {
         String sectionName = faker.country().name() + faker.number().randomDigit();
